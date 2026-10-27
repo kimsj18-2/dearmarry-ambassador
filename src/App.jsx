@@ -70,7 +70,7 @@ function LeftPage() {
 function RightPage() {
   return (
     <>
-      <SpreadHeading eyebrow="TOGETHER,">
+      <SpreadHeading>
         <span className="brand-inline">DEAR MARRY</span> 앰버서더로<br />당신을 초대합니다.
       </SpreadHeading>
       <p>디어메리는 한 번의 만남보다, 한 사람의 평생을 생각합니다.</p>
@@ -89,7 +89,7 @@ function BenefitsLeftPage() {
   return (
     <>
       <Leaf className="page-leaf" />
-      <SpreadHeading eyebrow="WHO WE ARE LOOKING FOR" script="With sincerity">
+      <SpreadHeading script="With sincerity">
         이런 분과 함께하고 싶습니다.
       </SpreadHeading>
       <ul className="page-points ambassador-profile">
@@ -98,6 +98,7 @@ function BenefitsLeftPage() {
         <li>진정성 있는 만남의 가치에 공감하는 분</li>
         <li>주변 사람의 이야기를 편하게 들어 주는 분</li>
       </ul>
+      <p className="page-note">좋은 만남의 가치에 공감하고,<br />진심을 담아 함께해 주실 분을 기다립니다.</p>
       <span className="folio">DEAR MARRY · 02</span>
     </>
   );
@@ -106,8 +107,8 @@ function BenefitsLeftPage() {
 function BenefitsRightPage() {
   return (
     <>
-      <SpreadHeading eyebrow="AUSTRALIA AMBASSADOR">
-        하는 일
+      <SpreadHeading>
+        함께하는 일
       </SpreadHeading>
       <ul className="page-points ambassador-duties">
         <li>호주 한인 커뮤니티 · SNS에서 디어메리 소개</li>
@@ -125,7 +126,7 @@ function ApplicationLeftPage() {
   return (
     <>
       <Leaf className="page-leaf" />
-      <SpreadHeading eyebrow="A LETTER FROM YOU" script="Tell us your story">
+      <SpreadHeading script="Tell us your story">
         당신의 이야기를 들려주세요.
       </SpreadHeading>
       <p>아래 내용을 중심으로 편안하게 작성해주세요.</p>
@@ -134,7 +135,6 @@ function ApplicationLeftPage() {
         <li>디어메리를 누구에게, 어떤 방식으로 소개하고 싶은지</li>
         <li>진정성 있는 만남의 가치에 왜 공감하는지</li>
       </ul>
-      <p className="page-note">좋은 만남의 가치에 공감하고, 진심을 담아 함께해 주실 분을 기다립니다.</p>
       <p className="application-invite-note">함께하고 싶은 이야기를 디어메리에 들려주세요.</p>
       <span className="folio">DEAR MARRY · 03</span>
     </>
@@ -144,7 +144,7 @@ function ApplicationLeftPage() {
 function ApplicationRightPage() {
   return (
     <div className="application-cta-page">
-      <SpreadHeading eyebrow="AMBASSADOR APPLICATION">
+      <SpreadHeading>
         활동 혜택
       </SpreadHeading>
       <span className="section-kicker benefits-list-kicker">AMBASSADOR BENEFITS</span>

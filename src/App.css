@@ -693,7 +693,7 @@ button { font: inherit; }
 }
 
 .application-link {
-  margin-top: 0;
+  margin-top: 3%;
   padding: 11px 18px;
   align-self: flex-end;
   border-color: rgba(30, 51, 34, 0.58);
@@ -740,6 +740,51 @@ button { font: inherit; }
 
 .video-page.spread-page-2 .application-rewards small {
   font-size: clamp(8px, 0.64vw, 11px);
+}
+
+.video-page {
+  --lower-rule-top: 71.4%;
+}
+
+.video-page .application-cta-page {
+  position: static;
+}
+
+.video-page.spread-page-0 .invitation-belief,
+.video-page.spread-page-1 .page-note,
+.video-page.spread-page-1 .duties-note,
+.video-page.spread-page-2 .application-invite-note {
+  position: absolute;
+  top: var(--lower-rule-top);
+  right: 9%;
+  left: 9%;
+  margin: 0 !important;
+  padding-top: 5%;
+  border-top: 1px solid rgba(51, 46, 39, 0.22);
+}
+
+.video-page.spread-page-0 .section-rule,
+.video-page.spread-page-2 .section-rule {
+  position: absolute;
+  top: var(--lower-rule-top);
+  right: 9%;
+  left: 9%;
+  margin: 0;
+}
+
+.video-page.spread-page-0 .closing {
+  position: absolute;
+  top: calc(var(--lower-rule-top) + 3.5%);
+  right: 9%;
+  left: 9%;
+  margin: 0;
+}
+
+.video-page.spread-page-2 .application-link {
+  position: absolute;
+  top: calc(var(--lower-rule-top) + 5%);
+  right: 9%;
+  margin: 0;
 }
 
 .dm-footer {
@@ -991,7 +1036,8 @@ button { font: inherit; }
   .mobile-paper .application-invite-note { font-size: 11px !important; }
   .mobile-paper .duties-note { margin-top: 32px !important; font-size: 11px !important; }
   .mobile-paper .send-letter { padding: 10px 15px; font-size: 11px; }
-  .mobile-paper .application-link { padding: 12px 18px; font-size: 13px; }
+  .mobile-paper .application-link { margin-top: 12px; padding: 12px 18px; font-size: 13px; }
+  .mobile-paper .application-cta-page > .ambassador-signature { right: 0; bottom: -20px; }
 
   .dm-footer {
     bottom: 14px;
