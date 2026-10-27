@@ -140,7 +140,9 @@ function ApplicationLeftPage() {
   );
 }
 
-function ApplicationRightPage({ onSubmit }) {
+function ApplicationRightPage({ onSubmit, submissionState, submitError }) {
+  const isSubmitting = submissionState === "submitting";
+
   return (
     <form className="application-form" onSubmit={onSubmit}>
       <span className="eyebrow">AMBASSADOR APPLICATION</span>
@@ -153,16 +155,26 @@ function ApplicationRightPage({ onSubmit }) {
       <label><span>활동 채널</span><input name="channel" required placeholder="Instagram, YouTube, Blog 등" /></label>
       <label><span>채널 URL</span><input name="url" placeholder="채널 주소나 이름을 적어주세요" /></label>
       <label><span>디어메리를 소개하고 싶은 이유</span><textarea name="message" rows="3" required placeholder="당신의 이야기를 들려주세요" /></label>
-      <label className="consent"><input type="checkbox" required /><span>신청 검토와 연락을 위한 정보 수집에 동의합니다.</span></label>
-      <button className="send-letter" type="submit">신청 편지 보내기</button>
+      <input className="form-honeypot" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+      <label className="consent"><input name="consent" type="checkbox" required /><span>신청 검토와 연락을 위한 정보 수집에 동의합니다.</span></label>
+      {submitError && <p className="form-error" role="alert">{submitError}</p>}
+      <button className="send-letter" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "편지를 보내는 중..." : "신청 편지 보내기"}
+      </button>
     </form>
   );
 }
 
-function SpreadSide({ page, side, onSubmit }) {
+function SpreadSide({ page, side, onSubmit, submissionState, submitError }) {
   if (page === 0) return side === "left" ? <LeftPage /> : <RightPage />;
   if (page === 1) return side === "left" ? <BenefitsLeftPage /> : <BenefitsRightPage />;
-  return side === "left" ? <ApplicationLeftPage /> : <ApplicationRightPage onSubmit={onSubmit} />;
+  return side === "left" ? <ApplicationLeftPage /> : (
+    <ApplicationRightPage
+      onSubmit={onSubmit}
+      submissionState={submissionState}
+      submitError={submitError}
+    />
+  );
 }
 
 function SubmissionComplete({ onEdit }) {
@@ -231,6 +243,7 @@ export default function App() {
   const [fromPage, setFromPage] = useState(0);
   const [targetPage, setTargetPage] = useState(0);
   const [submissionState, setSubmissionState] = useState("editing");
+  const [submitError, setSubmitError] = useState("");
   const videoRef = useRef(null);
   const turnTimers = useRef([]);
 
@@ -282,14 +295,60 @@ export default function App() {
   const previousLabel = page === 1 ? "← 초대장으로 돌아가기" : "← 앰버서더 안내로 돌아가기";
   const nextLabel = page === 0 ? "앰버서더 안내 보기 →" : "신청서 작성하기 →";
 
-  const submitApplication = (event) => {
+  const submitApplication = async (event) => {
     event.preventDefault();
     if (submissionState !== "editing") return;
-    setSubmissionState("complete");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const contact = String(formData.get("contact") || "").trim();
+    const applicantName = String(formData.get("name") || "").trim();
+    const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+
+    setSubmitError("");
+    setSubmissionState("submitting");
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/kimsj@letsdingco.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `[디어메리 앰버서더] ${applicantName}님의 신청`,
+          _template: "table",
+          _captcha: "false",
+          _honey: formData.get("_honey"),
+          "이름 또는 활동명": applicantName,
+          "연락처 또는 이메일": contact,
+          "활동 채널": formData.get("channel"),
+          "채널 URL": formData.get("url") || "미입력",
+          "지원 동기": formData.get("message"),
+          "개인정보 수집 동의": formData.get("consent") ? "동의함" : "동의하지 않음",
+          "접수 페이지": window.location.href,
+          ...(looksLikeEmail ? { email: contact } : {}),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || result.success === false || result.success === "false") {
+        throw new Error("submission_failed");
+      }
+
+      form.reset();
+      setSubmissionState("complete");
+    } catch {
+      setSubmissionState("editing");
+      setSubmitError("전송에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    }
   };
 
   const isSubmitted = submissionState === "complete";
-  const editApplication = () => setSubmissionState("editing");
+  const editApplication = () => {
+    setSubmitError("");
+    setSubmissionState("editing");
+  };
 
   return (
     <main className={`dm dm--${phase}`}>
@@ -322,13 +381,13 @@ export default function App() {
           ) : (
             <>
               <section className="video-page video-page-left">
-                <SpreadSide page={baseLeftPage} side="left" onSubmit={submitApplication} />
+                <SpreadSide page={baseLeftPage} side="left" onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
                 {page > 0 && !turning && (
                   <PageTurnControl onTurn={() => turnPage("previous")} direction="previous" number={`0${page}`} label={previousLabel} />
                 )}
               </section>
               <section className="video-page video-page-right">
-                <SpreadSide page={baseRightPage} side="right" onSubmit={submitApplication} />
+                <SpreadSide page={baseRightPage} side="right" onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
                 {page < 2 && !turning && (
                   <PageTurnControl onTurn={() => turnPage("next")} number={`0${page + 2}`} label={nextLabel} />
                 )}
@@ -350,7 +409,7 @@ export default function App() {
                 key={`${mobilePage.page}-${mobilePage.side}`}
                 aria-label={`초대장 ${index + 1} / ${MOBILE_INVITATION_PAGES.length}`}
               >
-                <SpreadSide page={mobilePage.page} side={mobilePage.side} onSubmit={submitApplication} />
+                <SpreadSide page={mobilePage.page} side={mobilePage.side} onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
               </section>
             ))
           )}
