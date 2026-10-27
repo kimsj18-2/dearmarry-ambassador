@@ -36,17 +36,32 @@ function Leaf({ className = "" }) {
   );
 }
 
+function SpreadHeading({ eyebrow, script, kicker, children }) {
+  return (
+    <header className="spread-heading">
+      <span className="eyebrow">{eyebrow}</span>
+      <div className="spread-pretitle">
+        {script && <h2 className="script">{script}</h2>}
+        {kicker && <span className="section-kicker">{kicker}</span>}
+      </div>
+      <div className="spread-title-block">
+        <h2 className="spread-title">{children}</h2>
+      </div>
+      <span className="short-rule" />
+    </header>
+  );
+}
+
 function LeftPage() {
   return (
     <>
-      <span className="eyebrow">DEAR YOU,</span>
       <Leaf className="page-leaf" />
-      <h2 className="script">An invitation</h2>
-      <h3>좋은 인연을 더 멀리<br />전해주실 당신에게.</h3>
-      <span className="short-rule" />
+      <SpreadHeading eyebrow="DEAR YOU," script="An invitation">
+        좋은 인연을 더 멀리<br />전해주실 당신에게.
+      </SpreadHeading>
       <p>좋은 인연은 때로 한 사람의<br />진심 어린 소개에서 시작됩니다.</p>
       <p>디어메리는 지역과 지인의 범위를 넘어 더 많은 사람이 진지한 인연을 만날 수 있도록 새로운 연결을 만들어가고 있습니다.</p>
-      <p className="invitation-belief">좋은 만남의 가치를 알아보는 당신과 함께라면, 디어메리의 진심이 더 멀리 닿을 수 있다고 믿습니다.</p>
+      <p className="invitation-belief">좋은 만남의 가치를 알아보는 당신과 함께라면,<br />디어메리의 진심이 더 멀리 닿을 수 있다고 믿습니다.</p>
       <span className="folio">DEAR MARRY · 01</span>
     </>
   );
@@ -55,9 +70,9 @@ function LeftPage() {
 function RightPage() {
   return (
     <>
-      <span className="eyebrow">TOGETHER,</span>
-      <span className="short-rule" />
-      <h2 className="page-title"><span className="brand-inline">DEAR MARRY</span> 앰버서더로<br />당신을 초대합니다.</h2>
+      <SpreadHeading eyebrow="TOGETHER,">
+        <span className="brand-inline">DEAR MARRY</span> 앰버서더로<br />당신을 초대합니다.
+      </SpreadHeading>
       <p>디어메리는 한 번의 만남보다, 한 사람의 평생을 생각합니다.</p>
       <p>서류와 인터뷰로 회원을 확인하고, 전담 매니저가 생활과 바람을 들은 뒤 추천하는 이유와 함께 상대를 소개합니다.</p>
       <p>디어메리가 사람을 소개하는 방식처럼, 우리의 이야기도 진심을 담아 전해주실 분과 함께하고 싶습니다.</p>
@@ -73,12 +88,10 @@ function RightPage() {
 function BenefitsLeftPage() {
   return (
     <>
-      <span className="eyebrow">WHO WE ARE LOOKING FOR</span>
       <Leaf className="page-leaf" />
-      <h2 className="script">With sincerity</h2>
-      <h3>이런 분과<br />함께하고 싶습니다.</h3>
-      <p className="ambassador-region">디어메리 호주 앰버서더 · 호주 전역</p>
-      <span className="short-rule" />
+      <SpreadHeading eyebrow="WHO WE ARE LOOKING FOR" script="With sincerity">
+        이런 분과 함께하고 싶습니다.
+      </SpreadHeading>
       <ul className="page-points ambassador-profile">
         <li>호주에 살고 있는 한인</li>
         <li>현지 한인 커뮤니티에서 활발히 활동하는 분</li>
@@ -93,17 +106,16 @@ function BenefitsLeftPage() {
 function BenefitsRightPage() {
   return (
     <>
-      <span className="eyebrow">AUSTRALIA AMBASSADOR</span>
-      <h2 className="script">What you'll do</h2>
-      <h3>하는 일</h3>
-      <span className="short-rule" />
+      <SpreadHeading eyebrow="AUSTRALIA AMBASSADOR">
+        하는 일
+      </SpreadHeading>
       <ul className="page-points ambassador-duties">
         <li>호주 한인 커뮤니티 · SNS에서 디어메리 소개</li>
         <li>현지 한인 모임 · 행사에서 디어메리 안내</li>
         <li>관심 있는 분을 상담 신청으로 연결</li>
         <li>현지 한인 사회의 분위기와 의견 전달</li>
       </ul>
-      <p className="duties-note">지역의 이야기를 듣고, 디어메리와 좋은 인연의 가능성을 함께 넓혀주세요.</p>
+      <p className="duties-note">당신이 있는 곳에서, 좋은 인연의 시작을 함께 만들어주세요.</p>
       <span className="signature ambassador-signature">DEAR MARRY AMBASSADOR</span>
     </>
   );
@@ -112,18 +124,18 @@ function BenefitsRightPage() {
 function ApplicationLeftPage() {
   return (
     <>
-      <span className="eyebrow">A LETTER FROM YOU</span>
       <Leaf className="page-leaf" />
-      <h2 className="script">Tell us your story</h2>
-      <h3>당신의 이야기를<br />들려주세요.</h3>
-      <span className="short-rule" />
+      <SpreadHeading eyebrow="A LETTER FROM YOU" script="Tell us your story">
+        당신의 이야기를 들려주세요.
+      </SpreadHeading>
       <p>아래 내용을 중심으로 편안하게 작성해주세요.</p>
       <ul className="page-points application-points">
         <li>어떤 채널이나 커뮤니티에서 활동하고 있는지</li>
         <li>디어메리를 누구에게, 어떤 방식으로 소개하고 싶은지</li>
         <li>진정성 있는 만남의 가치에 왜 공감하는지</li>
       </ul>
-      <p className="page-note">채널 규모보다 활동의 분위기와 브랜드에 대한 공감을 함께 봅니다.</p>
+      <p className="page-note">좋은 만남의 가치에 공감하고, 진심을 담아 함께해 주실 분을 기다립니다.</p>
+      <p className="application-invite-note">함께하고 싶은 이야기를 디어메리에 들려주세요.</p>
       <span className="folio">DEAR MARRY · 03</span>
     </>
   );
@@ -132,22 +144,21 @@ function ApplicationLeftPage() {
 function ApplicationRightPage() {
   return (
     <div className="application-cta-page">
-      <span className="eyebrow">AMBASSADOR APPLICATION</span>
-      <span className="short-rule" />
-      <span className="section-kicker">AMBASSADOR BENEFITS</span>
-      <h2 className="application-title">활동 혜택</h2>
+      <SpreadHeading eyebrow="AMBASSADOR APPLICATION">
+        활동 혜택
+      </SpreadHeading>
+      <span className="section-kicker benefits-list-kicker">AMBASSADOR BENEFITS</span>
       <ul className="page-points ambassador-rewards application-rewards">
         <li>
           <strong>활동비 지급</strong>
-          <small>금액 · 지급 기준 협의</small>
+          <small>금액 및 지급 기준 협의</small>
         </li>
         <li>
-          <strong>멤버십 가입에 따른 인센티브 제공</strong>
-          <small>금액 · 지급 기준 협의</small>
+          <strong>멤버십 가입 연계 인센티브</strong>
+          <small>금액 및 지급 기준 협의</small>
         </li>
       </ul>
       <div className="section-rule" />
-      <p className="application-link-copy">함께하고 싶은 이야기를<br />디어메리 홈페이지에서 들려주세요.</p>
       <a
         className="send-letter application-link"
         href={AMBASSADOR_APPLICATION_URL}
@@ -190,8 +201,8 @@ function TurningLeaf({ direction, fromPage, targetPage }) {
   const backPage = direction === "next" ? targetPage : fromPage;
   return (
     <div className={`turning-leaf turning-leaf--${direction}`} aria-hidden="true">
-      <section className="video-page turning-face turning-face-front"><SpreadSide page={frontPage} side="right" /></section>
-      <section className="video-page turning-face turning-face-back"><SpreadSide page={backPage} side="left" /></section>
+      <section className={`video-page turning-face turning-face-front spread-page-${frontPage}`}><SpreadSide page={frontPage} side="right" /></section>
+      <section className={`video-page turning-face turning-face-back spread-page-${backPage}`}><SpreadSide page={backPage} side="left" /></section>
     </div>
   );
 }
@@ -280,13 +291,13 @@ export default function App() {
         )}
 
         <article className={`letter-overlay${turning ? ` is-turning is-${turnDirection}` : ""}`} aria-hidden={phase !== "open"}>
-          <section className="video-page video-page-left">
+          <section className={`video-page video-page-left spread-page-${baseLeftPage}`}>
             <SpreadSide page={baseLeftPage} side="left" />
             {page > 0 && !turning && (
               <PageTurnControl onTurn={() => turnPage("previous")} direction="previous" number={`0${page}`} label={previousLabel} />
             )}
           </section>
-          <section className="video-page video-page-right">
+          <section className={`video-page video-page-right spread-page-${baseRightPage}`}>
             <SpreadSide page={baseRightPage} side="right" />
             {page < 2 && !turning && (
               <PageTurnControl onTurn={() => turnPage("next")} number={`0${page + 2}`} label={nextLabel} />
@@ -300,7 +311,7 @@ export default function App() {
         <article className="mobile-pages">
           {MOBILE_INVITATION_PAGES.map((mobilePage, index) => (
             <section
-              className={`mobile-paper mobile-paper-${mobilePage.side}`}
+              className={`mobile-paper mobile-paper-${mobilePage.side} spread-page-${mobilePage.page}`}
               key={`${mobilePage.page}-${mobilePage.side}`}
               aria-label={`초대장 ${index + 1} / ${MOBILE_INVITATION_PAGES.length}`}
             >

@@ -269,13 +269,34 @@ button { font: inherit; }
 }
 
 .script {
-  margin: 10% 0 5%;
+  margin: 0;
   color: var(--champagne);
   font-family: "DM Serif Display", serif;
   font-size: clamp(24px, 1.9vw, 36px);
   font-style: italic;
   font-weight: 400;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.spread-pretitle {
+  display: flex;
+  min-height: clamp(54px, 5.3vw, 78px);
+  align-items: flex-end;
+}
+
+.spread-pretitle .section-kicker { margin: 0 0 5px; }
+
+.spread-title-block {
+  min-height: 3.1em;
+}
+
+.spread-title {
+  margin: 0;
+  color: #41372e;
+  font-size: clamp(17px, 1.25vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.55;
 }
 
 .video-page h3,
@@ -294,14 +315,6 @@ button { font: inherit; }
   font-size: clamp(9px, 0.72vw, 13px);
   line-height: 1.85;
   word-break: keep-all;
-}
-
-.page-title {
-  margin: 7% 0 5.5%;
-  font-size: clamp(17px, 1.3vw, 25px);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 1.5;
 }
 
 .brand-inline {
@@ -627,18 +640,26 @@ button { font: inherit; }
   flex-direction: column;
 }
 
-.application-title {
-  margin: 0 0 6%;
-  color: #473b31;
-  font-size: clamp(20px, 1.5vw, 28px);
-  font-weight: 500;
-  letter-spacing: -0.05em;
+.benefits-list-kicker { margin-bottom: 3%; }
+
+.application-rewards { margin-top: 0; }
+
+.application-rewards li {
+  margin-bottom: 3%;
+  padding-bottom: 4%;
 }
 
-.application-rewards { margin-top: 3%; }
+.application-rewards strong {
+  font-size: clamp(10px, 0.9vw, 15px);
+}
 
-.application-link-copy {
-  margin: 0 0 6% !important;
+.application-rewards small {
+  margin-top: 4px;
+  font-size: clamp(7px, 0.55vw, 10px);
+}
+
+.application-invite-note {
+  margin: 2% 0 0 !important;
   color: #4d463d !important;
   font-size: clamp(10px, 0.78vw, 13px) !important;
   line-height: 1.75 !important;
@@ -672,8 +693,53 @@ button { font: inherit; }
 }
 
 .application-link {
-  margin-top: 2%;
-  align-self: flex-start;
+  margin-top: 0;
+  padding: 11px 18px;
+  align-self: flex-end;
+  border-color: rgba(30, 51, 34, 0.58);
+  font-size: clamp(10px, 0.82vw, 14px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) .eyebrow {
+  font-size: clamp(8px, 0.62vw, 11px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) .spread-title {
+  font-size: clamp(19px, 1.4vw, 27px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) p {
+  font-size: clamp(10px, 0.82vw, 14px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) .page-points li {
+  font-size: clamp(9px, 0.76vw, 13px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) .ambassador-region {
+  font-size: clamp(8px, 0.66vw, 11px);
+}
+
+.video-page:is(.spread-page-1, .spread-page-2) .page-note,
+.video-page:is(.spread-page-1, .spread-page-2) .duties-note,
+.video-page:is(.spread-page-1, .spread-page-2) .application-invite-note {
+  font-size: clamp(9px, 0.72vw, 12px) !important;
+}
+
+.video-page.spread-page-2 .page-note {
+  margin-bottom: 0;
+}
+
+.video-page.spread-page-2 .section-kicker {
+  font-size: clamp(7px, 0.55vw, 10px);
+}
+
+.video-page.spread-page-2 .application-rewards strong {
+  font-size: clamp(11px, 1vw, 16px);
+}
+
+.video-page.spread-page-2 .application-rewards small {
+  font-size: clamp(8px, 0.64vw, 11px);
 }
 
 .dm-footer {
@@ -840,7 +906,9 @@ button { font: inherit; }
   .mobile-paper .eyebrow { font-size: 10px; }
   .mobile-paper .script { font-size: 34px; }
   .mobile-paper h3 { font-size: 23px; }
-  .mobile-paper .page-title { font-size: 23px; }
+  .mobile-paper .spread-pretitle { min-height: 88px; }
+  .mobile-paper .spread-title-block { min-height: 71px; }
+  .mobile-paper .spread-title { font-size: 23px; }
   .mobile-paper p { margin-bottom: 17px; font-size: 12px; line-height: 1.9; }
   .mobile-paper .short-rule { width: 36px; margin: 24px 0; }
   .mobile-paper .signature { font-size: 16px; }
@@ -915,19 +983,15 @@ button { font: inherit; }
   }
 
   .mobile-paper .ambassador-region { font-size: 11px; }
-  .mobile-paper .section-kicker { margin-bottom: 7px; font-size: 9px; }
+  .mobile-paper .section-kicker { font-size: 9px; }
   .mobile-paper .section-heading { margin-bottom: 16px; font-size: 19px; }
-  .mobile-paper .ambassador-rewards strong { font-size: 11px; }
-  .mobile-paper .ambassador-rewards small { margin-top: 3px; font-size: 9px; }
+  .mobile-paper .ambassador-rewards strong { font-size: 13px; }
+  .mobile-paper .ambassador-rewards small { margin-top: 4px; font-size: 10px; }
 
-  .mobile-paper .application-title {
-    margin-bottom: 24px;
-    font-size: 22px;
-  }
-
-  .mobile-paper .application-link-copy { font-size: 11px !important; }
+  .mobile-paper .application-invite-note { font-size: 11px !important; }
   .mobile-paper .duties-note { margin-top: 32px !important; font-size: 11px !important; }
   .mobile-paper .send-letter { padding: 10px 15px; font-size: 11px; }
+  .mobile-paper .application-link { padding: 12px 18px; font-size: 13px; }
 
   .dm-footer {
     bottom: 14px;
