@@ -259,23 +259,6 @@ export default function App() {
     }
   };
 
-  const resetInvitation = () => {
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
-    }
-    turnTimers.current.forEach(clearTimeout);
-    turnTimers.current = [];
-    setPage(0);
-    setTurning(false);
-    setTurnDirection("next");
-    setFromPage(0);
-    setTargetPage(0);
-    setSubmissionState("editing");
-    setPhase("idle");
-  };
-
   const turnPage = (direction) => {
     if (turning) return;
     const nextPage = page + (direction === "next" ? 1 : -1);
@@ -374,18 +357,16 @@ export default function App() {
         </article>
       )}
 
-      <footer className="dm-footer">
-        {phase === "open" ? (
-          <button type="button" onClick={resetInvitation}>다시 보기 ↺</button>
-        ) : (
+      {phase !== "open" && (
+        <footer className="dm-footer">
           <button type="button" onClick={playInvitation} disabled={phase === "playing"}>
             {phase === "playing" ? "초대장을 펼치는 중..." : "초대장 열어보기 ↗"}
           </button>
-        )}
-        <p aria-live="polite">
-          {phase === "open" ? "Yours, Dear Marry" : phase === "playing" ? "A special invitation for you" : "DEAR MARRY"}
-        </p>
-      </footer>
+          <p aria-live="polite">
+            {phase === "playing" ? "A special invitation for you" : "DEAR MARRY"}
+          </p>
+        </footer>
+      )}
     </main>
   );
 }
