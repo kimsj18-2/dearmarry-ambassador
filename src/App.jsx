@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 const LETTER_REVEAL_TIME = 5.08;
+const AMBASSADOR_APPLICATION_URL = "https://claude.ai/artifact/PYy9GDcEWhATuJ6AhyTy7x#ambassador";
 
 const MOBILE_INVITATION_PAGES = [
   { page: 0, side: "left" },
@@ -102,19 +103,7 @@ function BenefitsRightPage() {
         <li>관심 있는 분을 상담 신청으로 연결</li>
         <li>현지 한인 사회의 분위기와 의견 전달</li>
       </ul>
-      <div className="section-rule" />
-      <span className="section-kicker">AMBASSADOR BENEFITS</span>
-      <h3 className="section-heading">활동 혜택</h3>
-      <ul className="page-points ambassador-rewards">
-        <li>
-          <strong>활동비 지급</strong>
-          <small>금액 · 지급 기준 협의</small>
-        </li>
-        <li>
-          <strong>멤버십 가입에 따른 인센티브 제공</strong>
-          <small>금액 · 지급 기준 협의</small>
-        </li>
-      </ul>
+      <p className="duties-note">지역의 이야기를 듣고, 디어메리와 좋은 인연의 가능성을 함께 넓혀주세요.</p>
       <span className="signature ambassador-signature">DEAR MARRY AMBASSADOR</span>
     </>
   );
@@ -140,70 +129,42 @@ function ApplicationLeftPage() {
   );
 }
 
-function ApplicationRightPage({ onSubmit, submissionState, submitError }) {
-  const isSubmitting = submissionState === "submitting";
-
+function ApplicationRightPage() {
   return (
-    <form className="application-form" onSubmit={onSubmit}>
+    <div className="application-cta-page">
       <span className="eyebrow">AMBASSADOR APPLICATION</span>
       <span className="short-rule" />
-      <h2 className="application-title">디어메리에게 보내는 편지</h2>
-      <div className="form-row">
-        <label><span>이름 또는 활동명</span><input name="name" required placeholder="성함을 적어주세요" /></label>
-        <label><span>연락처 또는 이메일</span><input name="contact" required placeholder="연락 가능한 정보를 적어주세요" /></label>
-      </div>
-      <label><span>활동 채널</span><input name="channel" required placeholder="Instagram, YouTube, Blog 등" /></label>
-      <label><span>채널 URL</span><input name="url" placeholder="채널 주소나 이름을 적어주세요" /></label>
-      <label><span>디어메리를 소개하고 싶은 이유</span><textarea name="message" rows="3" required placeholder="당신의 이야기를 들려주세요" /></label>
-      <input className="form-honeypot" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-      <label className="consent"><input name="consent" type="checkbox" required /><span>신청 검토와 연락을 위한 정보 수집에 동의합니다.</span></label>
-      {submitError && <p className="form-error" role="alert">{submitError}</p>}
-      <button className="send-letter" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "편지를 보내는 중..." : "신청 편지 보내기"}
-      </button>
-    </form>
+      <span className="section-kicker">AMBASSADOR BENEFITS</span>
+      <h2 className="application-title">활동 혜택</h2>
+      <ul className="page-points ambassador-rewards application-rewards">
+        <li>
+          <strong>활동비 지급</strong>
+          <small>금액 · 지급 기준 협의</small>
+        </li>
+        <li>
+          <strong>멤버십 가입에 따른 인센티브 제공</strong>
+          <small>금액 · 지급 기준 협의</small>
+        </li>
+      </ul>
+      <div className="section-rule" />
+      <p className="application-link-copy">함께하고 싶은 이야기를<br />디어메리 홈페이지에서 들려주세요.</p>
+      <a
+        className="send-letter application-link"
+        href={AMBASSADOR_APPLICATION_URL}
+        target="_blank"
+        rel="noreferrer"
+      >
+        앰버서더 신청하기 →
+      </a>
+      <span className="signature ambassador-signature">DEAR MARRY AMBASSADOR</span>
+    </div>
   );
 }
 
-function SpreadSide({ page, side, onSubmit, submissionState, submitError }) {
+function SpreadSide({ page, side }) {
   if (page === 0) return side === "left" ? <LeftPage /> : <RightPage />;
   if (page === 1) return side === "left" ? <BenefitsLeftPage /> : <BenefitsRightPage />;
-  return side === "left" ? <ApplicationLeftPage /> : (
-    <ApplicationRightPage
-      onSubmit={onSubmit}
-      submissionState={submissionState}
-      submitError={submitError}
-    />
-  );
-}
-
-function SubmissionComplete({ onEdit }) {
-  return (
-    <section className="submission-complete">
-      <div className="completion-content">
-        <span className="eyebrow">APPLICATION RECEIVED</span>
-        <span className="completion-wordmark" aria-label="DEAR MARRY">DEAR MARRY</span>
-        <div className="completion-status" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="none">
-            <path d="m8.5 16.5 5 5 10-11" />
-          </svg>
-        </div>
-        <h2>당신의 편지가<br />디어메리에 도착했습니다.</h2>
-        <p className="completion-lead">보내주신 이야기는 앰버서더 선정과 연락을 위해 소중히 확인하겠습니다.</p>
-        <div className="completion-next">
-          <span>NEXT STEPS</span>
-          <ol>
-            <li><small>01</small><strong>신청 내용 검토</strong></li>
-            <li><small>02</small><strong>미팅 안내</strong></li>
-            <li><small>03</small><strong>최종 결과 안내</strong></li>
-          </ol>
-        </div>
-        <p className="completion-contact">미팅이 필요한 분께 남겨주신 이메일로 연락드리겠습니다.</p>
-        <span className="completion-signature">Yours, Dear Marry</span>
-      </div>
-      <button type="button" onClick={onEdit}>신청서 다시 보기</button>
-    </section>
-  );
+  return side === "left" ? <ApplicationLeftPage /> : <ApplicationRightPage />;
 }
 
 function PageTurnControl({ onTurn, direction = "next", number, label }) {
@@ -242,8 +203,6 @@ export default function App() {
   const [turnDirection, setTurnDirection] = useState("next");
   const [fromPage, setFromPage] = useState(0);
   const [targetPage, setTargetPage] = useState(0);
-  const [submissionState, setSubmissionState] = useState("editing");
-  const [submitError, setSubmitError] = useState("");
   const videoRef = useRef(null);
   const turnTimers = useRef([]);
 
@@ -293,62 +252,7 @@ export default function App() {
   const baseLeftPage = turning && turnDirection === "previous" ? targetPage : page;
   const baseRightPage = turning && turnDirection === "next" ? targetPage : page;
   const previousLabel = page === 1 ? "← 초대장으로 돌아가기" : "← 앰버서더 안내로 돌아가기";
-  const nextLabel = page === 0 ? "앰버서더 안내 보기 →" : "신청서 작성하기 →";
-
-  const submitApplication = async (event) => {
-    event.preventDefault();
-    if (submissionState !== "editing") return;
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const contact = String(formData.get("contact") || "").trim();
-    const applicantName = String(formData.get("name") || "").trim();
-    const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
-
-    setSubmitError("");
-    setSubmissionState("submitting");
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/kimsj@letsdingco.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          _subject: `[디어메리 앰버서더] ${applicantName}님의 신청`,
-          _template: "table",
-          _captcha: "false",
-          _honey: formData.get("_honey"),
-          "이름 또는 활동명": applicantName,
-          "연락처 또는 이메일": contact,
-          "활동 채널": formData.get("channel"),
-          "채널 URL": formData.get("url") || "미입력",
-          "지원 동기": formData.get("message"),
-          "개인정보 수집 동의": formData.get("consent") ? "동의함" : "동의하지 않음",
-          "접수 페이지": window.location.href,
-          ...(looksLikeEmail ? { email: contact } : {}),
-        }),
-      });
-      const result = await response.json().catch(() => ({}));
-
-      if (!response.ok || result.success === false || result.success === "false") {
-        throw new Error("submission_failed");
-      }
-
-      form.reset();
-      setSubmissionState("complete");
-    } catch {
-      setSubmissionState("editing");
-      setSubmitError("전송에 실패했습니다. 잠시 후 다시 시도해주세요.");
-    }
-  };
-
-  const isSubmitted = submissionState === "complete";
-  const editApplication = () => {
-    setSubmitError("");
-    setSubmissionState("editing");
-  };
+  const nextLabel = page === 0 ? "앰버서더 안내 보기 →" : "활동 혜택 · 신청 안내 보기 →";
 
   return (
     <main className={`dm dm--${phase}`}>
@@ -375,44 +279,34 @@ export default function App() {
           </button>
         )}
 
-        <article className={`letter-overlay${turning ? ` is-turning is-${turnDirection}` : ""}${isSubmitted ? " is-submitted" : ""}`} aria-hidden={phase !== "open"}>
-          {isSubmitted ? (
-            <SubmissionComplete onEdit={editApplication} />
-          ) : (
-            <>
-              <section className="video-page video-page-left">
-                <SpreadSide page={baseLeftPage} side="left" onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
-                {page > 0 && !turning && (
-                  <PageTurnControl onTurn={() => turnPage("previous")} direction="previous" number={`0${page}`} label={previousLabel} />
-                )}
-              </section>
-              <section className="video-page video-page-right">
-                <SpreadSide page={baseRightPage} side="right" onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
-                {page < 2 && !turning && (
-                  <PageTurnControl onTurn={() => turnPage("next")} number={`0${page + 2}`} label={nextLabel} />
-                )}
-              </section>
-              {turning && <TurningLeaf direction={turnDirection} fromPage={fromPage} targetPage={targetPage} />}
-            </>
-          )}
+        <article className={`letter-overlay${turning ? ` is-turning is-${turnDirection}` : ""}`} aria-hidden={phase !== "open"}>
+          <section className="video-page video-page-left">
+            <SpreadSide page={baseLeftPage} side="left" />
+            {page > 0 && !turning && (
+              <PageTurnControl onTurn={() => turnPage("previous")} direction="previous" number={`0${page}`} label={previousLabel} />
+            )}
+          </section>
+          <section className="video-page video-page-right">
+            <SpreadSide page={baseRightPage} side="right" />
+            {page < 2 && !turning && (
+              <PageTurnControl onTurn={() => turnPage("next")} number={`0${page + 2}`} label={nextLabel} />
+            )}
+          </section>
+          {turning && <TurningLeaf direction={turnDirection} fromPage={fromPage} targetPage={targetPage} />}
         </article>
       </div>
 
       {phase === "open" && (
-        <article className={`mobile-pages${isSubmitted ? " is-submitted" : ""}`}>
-          {isSubmitted ? (
-            <SubmissionComplete onEdit={editApplication} />
-          ) : (
-            MOBILE_INVITATION_PAGES.map((mobilePage, index) => (
-              <section
-                className={`mobile-paper mobile-paper-${mobilePage.side}`}
-                key={`${mobilePage.page}-${mobilePage.side}`}
-                aria-label={`초대장 ${index + 1} / ${MOBILE_INVITATION_PAGES.length}`}
-              >
-                <SpreadSide page={mobilePage.page} side={mobilePage.side} onSubmit={submitApplication} submissionState={submissionState} submitError={submitError} />
-              </section>
-            ))
-          )}
+        <article className="mobile-pages">
+          {MOBILE_INVITATION_PAGES.map((mobilePage, index) => (
+            <section
+              className={`mobile-paper mobile-paper-${mobilePage.side}`}
+              key={`${mobilePage.page}-${mobilePage.side}`}
+              aria-label={`초대장 ${index + 1} / ${MOBILE_INVITATION_PAGES.length}`}
+            >
+              <SpreadSide page={mobilePage.page} side={mobilePage.side} />
+            </section>
+          ))}
         </article>
       )}
 
